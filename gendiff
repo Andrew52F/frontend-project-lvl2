@@ -3,10 +3,9 @@ const program = require('commander');
 
 program
 .version('0.0.1')
-.description('Compares two configuration files and shows a difference.');
+.description('Compares two configuration files and shows a difference.')
+.argument('<filepath1>')
+.argument('<filepath2>')
+.option('-f, --format <type>', 'output file format')
 
 program.parse();
-
-const options = program.opts();
-const limit = options.first ? 1 : undefined;
-console.log(program.args[0].split(options.separator, limit));
