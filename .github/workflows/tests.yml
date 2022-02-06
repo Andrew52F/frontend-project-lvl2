@@ -1,0 +1,61 @@
+name: tests
+on:
+  push:
+    branches: [ main ]
+jobs:
+  my-job:
+    runs-on: ubuntu-latest 
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+         
+         
+      - name: Create secondary files  
+      - uses: 1arp/create-a-file-action@0.2
+        with:
+          file: 'file1.json'
+          content: |
+           {
+            "host": "hexlet.io",
+            "timeout": 50,
+            "proxy": "123.234.53.22",
+            "follow": false
+           }
+      - uses: 1arp/create-a-file-action@0.2
+        with:
+          file: 'file2.json'
+          content: |
+           {
+            "timeout": 20,
+            "verbose": true,
+            "host": "hexlet.io"
+           }
+      - uses: 1arp/create-a-file-action@0.2
+        with:
+          file: 'correct.txt'
+          content: |
+           {
+              host: hexlet.io
+            - timeout: 50
+            + timeout: 20
+            - proxy: 123.234.53.22
+            - follow: false
+            + verbose: true
+           }
+      
+      - name: npm install
+        run: |
+          make install
+        env:
+          CI: true  
+          
+      - name: Run tests
+        run: |
+          make test
