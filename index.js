@@ -2,25 +2,20 @@ import _ from 'lodash';
 import path from 'path';
 import fs from 'fs';
 
-const getAbsPath = (fpath) => {
-  let filepath = fpath;
-  if (!path.isAbsolute(filepath)) {
-    filepath = path.resolve([process.cwd(), filepath]);
-  }
-  return filepath;
-};
+const getAbsPath = (filepath) => (!path.isAbsolute(filepath)) ? path.resolve([process.cwd(), filepath]) : filepath;
 
-const getObjFromFilePath = (fpath) => {
-  let filepath = fpath;
-  filepath = getAbsPath(filepath);
+const getObjFromFilePath = (filepath) => {
   const fileData = fs.readFileSync(filepath);
   const obj = JSON.parse(fileData);
   return obj;
 };
 
 const gendiff = (filepath1, filepath2) => {
-  const obj1 = getObjFromFilePath(filepath1);
-  const obj2 = getObjFromFilePath(filepath2);
+  const absFilepath1 = getAbsPath(filepath1);
+  const absFilepath2 = getAbsPath(filepath2);
+
+  const obj1 = getObjFromFilePath(absFilepath1);
+  const obj2 = getObjFromFilePath(absFilepath2);
 
   const keys = _.union(Object.keys(obj1), Object.keys(obj2));
   const resultObj = keys.reduce((previous, curr) => {
