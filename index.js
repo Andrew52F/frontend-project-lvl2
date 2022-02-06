@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const path = require('path');
-const fs = require('fs');
+import _ from 'lodash';
+import path from 'path';
+import fs from 'fs';
 
 const getAbsPath = (fpath) => {
   let filepath = fpath;
@@ -38,6 +38,6 @@ const gendiff = (filepath1, filepath2) => {
     return prev;
   }, {});
   const resultStr = JSON.stringify(resultObj, true, 1).replace(/[,"]/g, '');
-  return console.log(resultStr);
+  return resultStr;
 };
-module.exports = gendiff;
+export default gendiff;
