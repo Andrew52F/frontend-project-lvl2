@@ -2,7 +2,12 @@ import _ from 'lodash';
 import path from 'path';
 import fs from 'fs';
 
-const getAbsPath = (filepath) => (!path.isAbsolute(filepath)) ? path.resolve([process.cwd(), filepath]) : filepath;
+const getAbsPath = (filepath) => {
+  if (!path.isAbsolute(filepath)) {
+    return path.resolve([process.cwd(), filepath]);
+  }
+  return filepath;
+};
 
 const getObjFromFilePath = (filepath) => {
   const fileData = fs.readFileSync(filepath);

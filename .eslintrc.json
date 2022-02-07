@@ -13,7 +13,6 @@
     },
     "rules": {
         "import/extensions": "off",
-        "no-console": "off",
-        "code": 120
+        "no-console": "off"
     }
 }
