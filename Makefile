@@ -1,6 +1,6 @@
 install:
 	npm ci
-tests:
+test:
 	npx -n --experimental-vm-modules jest
 publish:
 	npm publish --dry-run
