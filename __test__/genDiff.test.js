@@ -24,4 +24,18 @@ describe('genDiff testing', () => {
     const correct = readFile('correct.txt');
     expect(actual).toEqual(correct);
   });
+  test('Recursive JSON fixtures', () => {
+    const file1path = getFixturePath('bigfile1.json');
+    const file2path = getFixturePath('bigfile2.json');
+    const actual = genDiff(file1path, file2path);
+    const correct = readFile('bigcorrect.txt');
+    expect(actual).toEqual(correct);
+  });
+  test('Recursive YAML fixtures', () => {
+    const file1path = getFixturePath('bigfile1.yaml');
+    const file2path = getFixturePath('bigfile2.yml');
+    const actual = genDiff(file1path, file2path);
+    const correct = readFile('bigcorrect.txt');
+    expect(actual).toEqual(correct);
+  });
 });
