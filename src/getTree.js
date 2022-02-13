@@ -8,17 +8,17 @@ const getTree = (data1, data2) => {
     const value2 = data2[key];
 
     if (!_.has(data2, key)) {
-      return { status: 'removed', key, value: value1 };
+      return { status: 'remove', key, value: value1 };
     }
     if (!_.has(data1, key)) {
-      return { status: 'added', key, value: value2 };
+      return { status: 'add', key, value: value2 };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      return { status: 'objects', key, children: getTree(value1, value2) };
+      return { status: 'recursion', key, children: getTree(value1, value2) };
     }
     if (!_.isEqual(value1, value2)) {
       return {
-        status: 'changed', key, before: value1, after: value2,
+        status: 'change', key, before: value1, after: value2,
       };
     }
     return { status: 'same', key, value: value1 };

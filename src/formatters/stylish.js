@@ -18,11 +18,11 @@ const stylish = (diffTree) => {
     const getDiffLine = (sign, value) => `${indent(depth)}${sign} ${node.key}: ${genDiffSubLines(value, depth)}\n`;
 
     switch (node.status) {
-      case 'added':
+      case 'add':
         return getDiffLine('+', node.value);
-      case 'removed':
+      case 'remove':
         return getDiffLine('-', node.value);
-      case 'changed':
+      case 'change':
         return `${getDiffLine('-', node.before)}${getDiffLine('+', node.after)}`;
       case 'same':
         return getDiffLine(' ', node.value);
