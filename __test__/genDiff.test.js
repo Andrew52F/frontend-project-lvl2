@@ -24,4 +24,12 @@ describe('genDiff testing', () => {
     const correct = readFile('correct.txt');
     expect(actual).toEqual(correct);
   });
+  test('Plain output', () => {
+    const file1path = getFixturePath('file1.yaml');
+    const file2path = getFixturePath('file2.yml');
+    const format = 'plain';
+    const actual = genDiff(file1path, file2path, format);
+    const correct = readFile('correct1.txt');
+    expect(actual).toEqual(correct);
+  })
 });

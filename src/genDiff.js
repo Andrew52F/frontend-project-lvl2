@@ -1,6 +1,6 @@
 import parseFile from './parseFile.js';
 import getTree from './getTree.js';
-import getFormatedResult from './formatters/getFormatedResult.js';
+import getFormatedResult from './formatters/index.js';
 
 const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const obj1 = parseFile(filepath1);
