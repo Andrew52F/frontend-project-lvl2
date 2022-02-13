@@ -1,14 +1,15 @@
+const getValueLine = (value) => {
+  if (typeof value === 'object' && value !== null) {
+    return '[complex value]';
+  } if (typeof value === 'string') {
+    return `'${value}'`;
+  } if (value === null) {
+    return null;
+  }
+  return String(value);
+};
+
 const plain = (diffTree) => {
-  const getValueLine = (value) => {
-    if (typeof value === 'object' && value !== null) {
-      return '[complex value]';
-    } if (typeof value === 'string') {
-      return `'${value}'`;
-    } if (value === null) {
-      return null;
-    }
-    return String(value);
-  };
   const iteration = (subTree, parent) => subTree
     .filter((node) => node.status !== 'same')
     .map((node) => {

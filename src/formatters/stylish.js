@@ -1,21 +1,20 @@
+const indent = (depth, spaseCount = 2) => ' '.repeat(depth * spaseCount);
+const getDiffSubLines = (value, depth) => {
+  if (typeof value !== 'object') {
+    return value.toString();
+  }
+  if (value === null) { return null; }
+  const lines = Object
+    .entries(value)
+    .map(([subKey, subValue]) => `${indent(depth + 2)}  ${subKey}: ${getDiffSubLines(subValue, depth + 2)}`);
+  return [
+    '{',
+    ...lines,
+    `${indent(depth + 1)}}`,
+  ].join('\n');
+};
+
 const stylish = (diffTree) => {
-//
-  const indent = (depth, spaseCount = 2) => ' '.repeat(depth * spaseCount);
-  const getDiffSubLines = (value, depth) => {
-    if (typeof value !== 'object') {
-      return value.toString();
-    }
-    if (value === null) { return null; }
-    const lines = Object
-      .entries(value)
-      .map(([subKey, subValue]) => `${indent(depth + 2)}  ${subKey}: ${getDiffSubLines(subValue, depth + 2)}`);
-    return [
-      '{',
-      ...lines,
-      `${indent(depth + 1)}}`,
-    ].join('\n');
-  };
-  //
   const iteration = (subTree, depth) => subTree.map((node) => {
     const getDiffLine = (sign, value) => `${indent(depth)}${sign} ${node.key}: ${getDiffSubLines(value, depth)}\n`;
 
