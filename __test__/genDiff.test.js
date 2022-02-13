@@ -31,5 +31,5 @@ describe('genDiff testing', () => {
     const actual = genDiff(file1path, file2path, format);
     const correct = readFile('correct1.txt');
     expect(actual).toEqual(correct);
-  })
+  });
 });
