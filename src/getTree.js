@@ -8,19 +8,22 @@ const getTree = (data1, data2) => {
     const value1 = data1[key];
     const value2 = data2[key];
 
-    let obj = {};
     if (!_.has(data2, key)) {
-      obj = make.remove(key, value1);
-    } else if (!_.has(data1, key)) {
-      obj = make.add(key, value2);
-    } else if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      obj = make.parent(key, getTree(value1, value2));
-    } else if (!_.isEqual(value1, value2)) {
-      obj = make.change(key, value1, value2);
-    } else if (_.isEqual(value1, value2)) {
-      obj = make.same(key, value1);
+      return make.remove(key, value1);
     }
-    return obj;
+    if (!_.has(data1, key)) {
+      return make.add(key, value2);
+    }
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
+      return make.parent(key, getTree(value1, value2));
+    }
+    if (!_.isEqual(value1, value2)) {
+      return make.change(key, value1, value2);
+    }
+    if (_.isEqual(value1, value2)) {
+      return make.same(key, value1);
+    }
+    return new Error('Diff tree making error');
   });
 };
 
