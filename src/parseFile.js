@@ -1,16 +1,23 @@
-import { isAbsolute, resolve, extname } from 'path';
+import path from 'path';
 import fs from 'fs';
 import yaml from 'js-yaml';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const parseFile = (filepath) => {
-  const path = !isAbsolute(filepath) ? resolve([process.cwd(), filepath]) : filepath;
-  const fileData = fs.readFileSync(path, 'utf8');
-  if (extname(path) === '.yaml' || extname(path) === '.yml') {
-    const objYaml = yaml.load(fileData);
-    return objYaml;
+  const absPath = !path.isAbsolute(filepath) ? path.join(__dirname, '..', '__fixtures__', filepath) : filepath;
+  const fileData = fs.readFileSync(absPath, 'utf8');
+  switch (path.extname(absPath)) {
+    case '.yaml':
+    case '.yml':
+      return yaml.load(fileData);
+    case '.json':
+      return JSON.parse(fileData);
+    default:
+      throw new Error(`This file format is not supported: ${path.extname(absPath)}`);
   }
-  const objJson = JSON.parse(fileData);
-  return objJson;
 };
 
 export default parseFile;

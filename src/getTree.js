@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { make } from './diffObject.js';
 
 const getTree = (data1, data2) => {
   const keys = _.union(Object.keys(data1), Object.keys(data2));
@@ -9,17 +10,15 @@ const getTree = (data1, data2) => {
 
     let obj = {};
     if (!_.has(data2, key)) {
-      obj = { status: 'remove', key, value: value1 };
+      obj = make.remove(key, value1);
     } else if (!_.has(data1, key)) {
-      obj = { status: 'add', key, value: value2 };
+      obj = make.add(key, value2);
     } else if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      obj = { status: 'recursion', key, children: getTree(value1, value2) };
+      obj = make.parent(key, getTree(value1, value2));
     } else if (!_.isEqual(value1, value2)) {
-      obj = {
-        status: 'change', key, before: value1, after: value2,
-      };
+      obj = make.change(key, value1, value2);
     } else if (_.isEqual(value1, value2)) {
-      obj = { status: 'same', key, value: value1 };
+      obj = make.same(key, value1);
     }
     return obj;
   });

@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/Andrew52F/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Andrew52F/frontend-project-lvl2/actions)",
+  "description": "CL-utility wich shows the difference between two json or yaml files",
   "main": "src/genDiff.js",
   "type": "module",
   "bin": {

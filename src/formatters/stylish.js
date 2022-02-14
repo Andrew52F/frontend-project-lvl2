@@ -1,3 +1,5 @@
+import { get } from '../diffObject.js';
+
 const indent = (depth, spaseCount = 2) => ' '.repeat(depth * spaseCount);
 const getDiffSubLines = (value, depth) => {
   if (typeof value !== 'object') {
@@ -16,21 +18,21 @@ const getDiffSubLines = (value, depth) => {
 
 const stylish = (diffTree) => {
   const iteration = (subTree, depth) => subTree.map((node) => {
-    const getDiffLine = (sign, value) => `${indent(depth)}${sign} ${node.key}: ${getDiffSubLines(value, depth)}\n`;
+    const getDiffLine = (sign, value) => `${indent(depth)}${sign} ${get.key(node)}: ${getDiffSubLines(value, depth)}\n`;
 
-    switch (node.status) {
+    switch (get.status(node)) {
       case 'add':
-        return getDiffLine('+', node.value);
+        return getDiffLine('+', get.value(node));
       case 'remove':
-        return getDiffLine('-', node.value);
+        return getDiffLine('-', get.value(node));
       case 'change':
-        return `${getDiffLine('-', node.before)}${getDiffLine('+', node.after)}`;
+        return `${getDiffLine('-', get.beforeVal(node))}${getDiffLine('+', get.afterVal(node))}`;
       case 'same':
-        return getDiffLine(' ', node.value);
-      case 'recursion':
-        return `${indent(depth + 1)}${node.key}: {\n${iteration(node.children, depth + 2).join('')}${indent(depth + 1)}}\n`;
+        return getDiffLine(' ', get.value(node));
+      case 'parent':
+        return `${indent(depth + 1)}${get.key(node)}: {\n${iteration(get.children(node), depth + 2).join('')}${indent(depth + 1)}}\n`;
       default:
-        throw new Error(`No such diff object status ${node.status}`);
+        throw new Error(`No such diff object status ${get.status(node)}`);
     }
   });
   return `{\n${iteration(diffTree, 1).join('')}}`;

@@ -8,7 +8,7 @@ const getFormatedResult = (diffTree, format) => {
     case 'plain':
       return plain(diffTree);
     case 'json':
-      return JSON.stringify(diffTree);
+      return JSON.stringify(diffTree, null, 2);
     default:
       throw new Error(`This format doesnt exist: ${format}`);
   }
