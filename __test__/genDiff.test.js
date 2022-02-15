@@ -16,32 +16,32 @@ describe('genDiff testing', () => {
     expect(actual).toEqual(correct);
   });
   test('Recursive JSON fixtures with absolute paths, stylish output format', () => {
-    const file1path = getFixturePath('file1.json');
-    const file2path = getFixturePath('file2.json');
+    const file1path = getFixturePath('file1-recursive.json');
+    const file2path = getFixturePath('file2-recursive.json');
     const actual = genDiff(file1path, file2path);
-    const correct = readFile('correct-stylish.txt');
+    const correct = readFile('correct-recursive-stylish.txt');
     expect(actual).toEqual(correct);
   });
   test('Recursive YAML fixtures, stylish output format', () => {
-    const file1path = getFixturePath('file1.yaml');
-    const file2path = getFixturePath('file2.yml');
+    const file1path = getFixturePath('file1-recursive.yaml');
+    const file2path = getFixturePath('file2-recursive.yml');
     const actual = genDiff(file1path, file2path);
-    const correct = readFile('correct-stylish.txt');
+    const correct = readFile('correct-recursive-stylish.txt');
     expect(actual).toEqual(correct);
   });
   test('Recursive JSON and YAML fixtures, stylish output format', () => {
-    const file1path = getFixturePath('file1.json');
-    const file2path = getFixturePath('file2.yml');
+    const file1path = getFixturePath('file1-recursive.json');
+    const file2path = getFixturePath('file2-recursive.yml');
     const actual = genDiff(file1path, file2path);
-    const correct = readFile('correct-stylish.txt');
+    const correct = readFile('correct-recursive-stylish.txt');
     expect(actual).toEqual(correct);
   });
   test('Recursive JSON and YAML fixtures, plain output format', () => {
-    const file1path = getFixturePath('file1.yaml');
-    const file2path = getFixturePath('file2.json');
+    const file1path = getFixturePath('file1-recursive.yaml');
+    const file2path = getFixturePath('file2-recursive.json');
     const format = 'plain';
     const actual = genDiff(file1path, file2path, format);
-    const correct = readFile('correct-plain.txt');
+    const correct = readFile('correct-recursive-plain.txt');
     expect(actual).toEqual(correct);
   });
 });
