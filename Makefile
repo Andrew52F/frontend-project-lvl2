@@ -1,5 +1,6 @@
 install:
 	npm ci
+	npm link
 test:
 	npx -n --experimental-vm-modules jest
 test-coverage:

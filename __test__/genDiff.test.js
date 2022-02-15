@@ -10,33 +10,33 @@ const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filen
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 describe('genDiff testing', () => {
-  test('Relative paths', () => {
-    const actual = genDiff('file1.json', 'file2.json');
-    const correct = readFile('correct-stylish.txt');
+  test('Flat JSON fixtures with relative paths, stylish output format', () => {
+    const actual = genDiff('file1-flat.json', 'file2-flat.json');
+    const correct = readFile('correct-flat-stylish.txt');
     expect(actual).toEqual(correct);
   });
-  test('JSON fixtures with absolute paths, stylish output format', () => {
+  test('Recursive JSON fixtures with absolute paths, stylish output format', () => {
     const file1path = getFixturePath('file1.json');
     const file2path = getFixturePath('file2.json');
     const actual = genDiff(file1path, file2path);
     const correct = readFile('correct-stylish.txt');
     expect(actual).toEqual(correct);
   });
-  test('YAML fixtures, stylish output format', () => {
+  test('Recursive YAML fixtures, stylish output format', () => {
     const file1path = getFixturePath('file1.yaml');
     const file2path = getFixturePath('file2.yml');
     const actual = genDiff(file1path, file2path);
     const correct = readFile('correct-stylish.txt');
     expect(actual).toEqual(correct);
   });
-  test('JSON and YAML fixtures, stylish output format', () => {
+  test('Recursive JSON and YAML fixtures, stylish output format', () => {
     const file1path = getFixturePath('file1.json');
     const file2path = getFixturePath('file2.yml');
     const actual = genDiff(file1path, file2path);
     const correct = readFile('correct-stylish.txt');
     expect(actual).toEqual(correct);
   });
-  test('JSON and YAML fixtures, plain output format', () => {
+  test('Recursive JSON and YAML fixtures, plain output format', () => {
     const file1path = getFixturePath('file1.yaml');
     const file2path = getFixturePath('file2.json');
     const format = 'plain';
