@@ -1,6 +1,6 @@
 import { get } from '../diffObject.js';
 
-const indent = (depth, spaseCount = 2) => ' '.repeat(depth * spaseCount);
+const indent = (depth, spaceCount = 4) => ' '.repeat(spaceCount * depth - 2);
 const getDiffSubLines = (value, depth) => {
   if (typeof value !== 'object') {
     return value.toString();
@@ -8,11 +8,11 @@ const getDiffSubLines = (value, depth) => {
   if (value === null) { return null; }
   const lines = Object
     .entries(value)
-    .map(([subKey, subValue]) => `${indent(depth + 2)}  ${subKey}: ${getDiffSubLines(subValue, depth + 2)}`);
+    .map(([subKey, subValue]) => `${indent(depth + 1)}  ${subKey}: ${getDiffSubLines(subValue, depth + 1)}`);
   return [
     '{',
     ...lines,
-    `${indent(depth + 1)}}`,
+    `${indent(depth)}  }`,
   ].join('\n');
 };
 
@@ -30,7 +30,7 @@ const stylish = (diffTree) => {
       case 'same':
         return getDiffLine(' ', get.value(node));
       case 'parent':
-        return `${indent(depth + 1)}${get.key(node)}: {\n${iteration(get.children(node), depth + 2).join('')}${indent(depth + 1)}}\n`;
+        return `${indent(depth)}  ${get.key(node)}: {\n${iteration(get.children(node), depth + 1).join('')}${indent(depth)}  }\n`;
       default:
         throw new Error(`No such diff object status ${get.status(node)}`);
     }
