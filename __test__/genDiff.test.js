@@ -17,27 +17,20 @@ const file2Yaml = getFixturePath('file2.yml');
 const stylish = readFile('correct-stylish.txt');
 const plain = readFile('correct-plain.txt');
 
-const stylishCases = [
+const cases = [
   [file1Json, file2Json],
   [file1Yaml, file2Yaml],
   [file1Json, file2Yaml],
   [file1Yaml, file2Json],
 ];
 
-const plainCases = [
-  [file1Json, file2Json],
-  [file1Yaml, file2Yaml],
-  [file1Json, file2Yaml],
-  [file1Yaml, file2Json],
-];
-
-test.each(stylishCases)(
+test.each(cases)(
   'Test stylish format',
   (file1, file2) => {
     expect(genDiff(file1, file2)).toEqual(stylish);
   },
 );
-test.each(plainCases)(
+test.each(cases)(
   'Test plain format',
   (file1, file2) => {
     expect(genDiff(file1, file2, 'plain')).toEqual(plain);
